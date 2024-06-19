@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block title %}
+    <title>Elementary Website</title>
+    {% endblock %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightgallery-js/1.4.0/css/lightgallery.min.css">
+     {% load static  %}
+    <link rel="stylesheet" href="{% static 'app/css/styles.css' %}">
+</head>
+<body>
+
+    <!-- header section starts -->
+
+    <header class="header">
+
+        <nav class="navbar">
+            {% block nav %}
+            <a href="#home">home</a>
+            <a href="#about">about</a>
+            <a href="#education">education</a>
+            <a href="#researcher">Researchers</a>
+            
+            {% endblock %}
+        </nav>
+        {% block search %}
+        {% endblock %}
+        <div class="icons">
+            <button class="fas fa-user " id="login-btn" style="font-size: 20px; background-color: white;cursor: pointer;"> <span class="grade" style="font-size: 1.7rem;">Grade level</span></button>
+            <div class="fas fa-bars" id="menu-btn"></div>
+        </div>
+
+        <form action="" class="login-form">
+            <nav class="popover">
+                <a href="{% url 'grade_1-2' %}">Grade 1-2</a>
+                <a href="{% url 'grade_3-4' %}">Grade 3-4</a>
+                <a href="{% url 'grade_5-6' %}">Grade 5-6</a>
+            </nav>
+        </form>
+
+        
+    </header>
+
+    <!-- header section ends -->
+
+   {% block content %}
+    <!-- home section starts -->
+
+    <section class="home" id="home">
+
+        <div class="content">
+            <h3>welcome to our <span>Website</span></h3>
+            <p>This is a website made for understanding digital text in our modern day of Education</p>
+            <form method="post" action="{% url 'download_education' %}">
+                {% csrf_token %}
+                <button type="submit" class="btn">Download all Folders</button>
+            </form>
+        </div>
+
+        <div class="image">
+            <img src="{% static 'app/images/kid.png' %}" alt="">
+        </div>
+
+        <div id="custom-shape" class="custom-shape-divider-bottom-1684324473">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z" class="shape-fill"></path>
+            </svg>
+        </div>
+        
+        
+
+    </section>
+
+    <!-- home section ends -->
+
+    <!-- about us section starts -->
+
+    <section class="about" id="about">
+
+        <h1 class="heading"> <span>about</span> us</h1>
+
+        <div class="row">
+
+            <div class="image">
+                <img src="{% static 'app/images/about.png' %}" alt="">
+            </div>
+
+            <div class="content">
+                <h3>Research , Digital Text and Modernization</h3>
+                <p>We are a group of researchers conduction study about digital text as the modern way of education.</p>
+                <p>This Website is about compiling different activities,quizzes and modules. In where you can download and view the materials online</p>
+                <a href="#" class="btn">read more</a>
+            </div>
+
+        </div>
+        
+    </section>
+    
+    <!-- about us section ends -->
+
+    <!-- education section start -->
+
+    <section class="education" id="education">
+
+        <h1 class="heading">our <span> Materials</span></h1>
+        <div class="box-container">
+
+            <div class="box">
+                <h3>Quizzes</h3>
+                <p>Ready to put your knowledge to the test? Our latest quiz is here to challenge your brain and see just how much you know about a variety of topics.</p>
+                <img src="{% static 'app/images/quiz.png' %}" alt="">
+            </div>
+
+            <div class="box">
+                <h3>Lessons</h3>
+                <p>Every lesson is a step towards greater knowledge and understanding. Our curated lessons cover an array of topics, making learning both engaging and effective.</p>
+                <img src="{% static 'app/images/module.png' %}" alt="">
+            </div>
+
+            <div class="box">
+                <h3>Activities</h3>
+                <p>Our activities are not just about entertainment—they're about growth, learning, and personal development. Whether you're challenging yourself with new skills and exploring your passions.</p>
+                <img src="{% static 'app/images/activity.png' %}" alt="">
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- education section ends -->
+
+    <!-- teacher section starts -->
+
+    <section class="teacher" id="researcher">
+
+        <h1 class="heading">our <span> Researchers</span></h1>
+
+        <div class="box-container">
+
+
+            <div class="box">
+                <img src="{% static 'app/images/1.png' %}" alt="">
+                <h3>Mutya Garcia</h3>
+                <p>Researcher</p>
+                <div class="share">
+                    <i class="fab fa-facebook-f"></i>
+                    <i class="fab fa-twitter"></i>
+                    <i class="fab fa-instagram"></i>
+                </div>
+            </div>
+
+            <div class="box">
+                <img src="{% static 'app/images/2.png' %}" alt="">
+                <h3>Shaina Rica Gonzaga</h3>
+                <p>Researcher</p>
+                <div class="share">
+                    <i class="fab fa-facebook-f"></i>
+                    <i class="fab fa-twitter"></i>
+                    <i class="fab fa-instagram"></i>
+                </div>
+            </div>
+            <div class="box">
+                <img src="{% static 'app/images/3.png' %}" alt="">
+                <h3>Joselito Iglisia</h3>
+                <p>Researcher</p>
+                <div class="share">
+                    <i class="fab fa-facebook-f"></i>
+                    <i class="fab fa-twitter"></i>
+                    <i class="fab fa-instagram"></i>
+                </div>
+            </div>
+            <div class="box">
+                <img src="{% static 'app/images/charmaine.png' %}" alt="">
+                <h3>Charmaine Luna</h3>
+                <p>Researcher</p>
+                <div class="share">
+                    <i class="fab fa-facebook-f"></i>
+                    <i class="fab fa-twitter"></i>
+                    <i class="fab fa-instagram"></i>
+                </div>
+            </div>
+            <div class="box">
+                <img src="{% static 'app/images/5.png' %}" alt="">
+                <h3>Jerimie Orgeta</h3>
+                <p>Researcher</p>
+                <div class="share">
+                    <i class="fab fa-facebook-f"></i>
+                    <i class="fab fa-twitter"></i>
+                    <i class="fab fa-instagram"></i>
+                </div>
+            </div>
+            <div class="box">
+                <img src="{% static 'app/images/6.png' %}" alt="">
+                <h3>Milky Tañafranca</h3>
+                <p>Researcher</p>
+                <div class="share">
+                    <i class="fab fa-facebook-f"></i>
+                    <i class="fab fa-twitter"></i>
+                    <i class="fab fa-instagram"></i>
+                </div>
+            </div>
+            <div class="box">
+                <img src="{% static 'app/images/7.png' %}" alt="">
+                <h3>Precious Zamora</h3>
+                <p>Researcher</p>
+                <div class="share">
+                    <i class="fab fa-facebook-f"></i>
+                    <i class="fab fa-twitter"></i>
+                    <i class="fab fa-instagram"></i>
+                </div>
+            </div>
+            
+            
+
+        </div>
+
+    </section>
+
+    <!-- teacher section ends -->
+
+
+
+   {% endblock %}
+    <!-- footer section starts -->
+
+    <section class="footer">
+
+        <div class="box-container">
+
+            <div class="box">
+                <h3> Disclaimer </h3>
+                <p>This content was created using publicly available tools and resources. We do not claim ownership or exclusivity of the tools, software, or resources mentioned or utilized in the creation process.</p>
+            </div>
+            <div class="box">
+                <h3>Credits</h3>
+                <a href="#"> <i class="fas fa-caret-right"></i> www.google.com</a>
+                <a href="#"> <i class="fas fa-caret-right"></i> academics</a>
+                <a href="#"> <i class="fas fa-caret-right"></i> admissions</a>
+                <a href="#"> <i class="fas fa-caret-right"></i> news & events</a>
+                <a href="#"> <i class="fas fa-caret-right"></i> Ninjahub</a>
+            </div>
+
+
+
+        </div>
+
+
+    </section>
+    <!-- footer section ends -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- lightgallery cdn js link -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightgallery-js/1.4.0/js/lightgallery.min.js"></script>
+    <!-- custom js file link -->
+    <script src="{% static 'app/javascript/script.js' %}"></script>
+    
+    <script>
+        lightGallery(document.querySelector('.gallery .gallery-container'));
+    </script>
+
+  
+</body>
+</html>
