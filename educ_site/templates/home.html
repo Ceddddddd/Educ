@@ -31,8 +31,10 @@
         {% block search %}
         {% endblock %}
         <div class="icons">
-            <button class="fas fa-user " id="login-btn" style="font-size: 20px; background-color: white;cursor: pointer;"> <span class="grade" style="font-size: 1.7rem;">Grade level</span></button>
-            <div class="fas fa-bars" id="menu-btn"></div>
+            {% block level %}
+            <div class="fas fa-bars" id="menu-btn" style="margin-left:0px;margin-right: 15px;"></div>
+            <button class="fas fa-user" id="login-btn" style="font-size: 20px; background-color: white;cursor: pointer;"> <span style="font-size: 14px;">Grade level</span></button>  
+            {% endblock %}
         </div>
 
         <form action="" class="login-form">

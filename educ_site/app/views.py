@@ -143,7 +143,7 @@ def view_quiz(request, quiz_id):
         quiz = Quiz.objects.get(id=quiz_id)
         file_path = quiz.content.path
         file_name = quiz.content.name.split('/')[-1]
-        response = FileResponse(open(file_path, 'rb'), content_type='application/pdf')
+        response = FileResponse(open(file_path, 'rb'), content_type='video/mp4')
         response['Content-Disposition'] = f'inline; filename="{file_name}"'
         return response
     except Activity.DoesNotExist:
@@ -157,7 +157,7 @@ def download_quiz(request, quiz_id):
         quiz = Quiz.objects.get(id=quiz_id)
         file_path = quiz.content.path
         file_name = quiz.content.name.split('/')[-1]
-        response = FileResponse(open(file_path, 'rb'), content_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
+        response = FileResponse(open(file_path, 'rb'), content_type='video/mp4')
         response['Content-Disposition'] = f'attachment; filename="{file_name}"'
         return response
     except Activity.DoesNotExist:

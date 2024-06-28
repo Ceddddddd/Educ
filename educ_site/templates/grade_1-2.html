@@ -11,6 +11,12 @@
 <a href="#quiz">Quizzes</a>
 <a href="#learning">Learning Modules</a>
 {% endblock %}
+
+{% block level %}
+    <button class="fas fa-user " id="login-btn" style="font-size: 20px; background-color: white;cursor: pointer;font-size: 15px;"> <span class="grade">Grade level</span></button>  
+    <div class="fas fa-bars" id="menu-btn"></div>
+{% endblock %}
+
 {% block search %}
 <form action="{% url 'search'%}"  method="get">
     <input class="search-input" type="text" name="q" placeholder="Search...">
