@@ -8,7 +8,7 @@
 {% block nav %}
 <a href="{% url 'home' %}">home</a>
 <a href="#activity">Activities</a>
-<a href="#quiz">Quizzes</a>
+<a href="#quiz">Videos</a>
 <a href="#learning">Learning Modules</a>
 {% endblock %}
 {% block search %}
@@ -55,7 +55,7 @@
 
     <section id="quiz">
         {% if quizzes_exist %}
-    <h1>Quizzes</h1>
+    <h1>Videos</h1>
     <div class="box-container">
         {% for quiz in quizzes %}
         {% if quiz.grade_level == 3 or quiz.grade_level == 4 %}
