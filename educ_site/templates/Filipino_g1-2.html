@@ -1,0 +1,91 @@
+{% extends 'home.html' %}
+{% block content %}
+
+{% block title %}
+<title>Grade 1 and 2</title>
+{% endblock %}
+
+{% block nav %}
+<a href="{% url 'home' %}">home</a>
+<a href="#quiz">Videos</a>
+<a href="#learning">Learning Modules</a>
+{% endblock %}
+
+{% block level %}
+    <button class="fas fa-user " id="login-btn" style="font-size: 20px; background-color: white;cursor: pointer;font-size: 15px;"> <span class="grade">Grade level</span></button>  
+    <div class="fas fa-bars" id="menu-btn"></div>
+{% endblock %}
+
+{% block search %}
+<form action="{% url 'search'%}"  method="get">
+    <input class="search-input" type="text" name="q" placeholder="Search...">
+    <button class="search-btn" type="submit">Search</button>
+</form>
+{% endblock %}
+
+
+<section class="activities">
+    <h1><a href="{% url 'grade_1-2' %}" style="padding: 15px;position: absolute;top: 10%;left:1%;color: rgb(10, 10, 10);">Filipino </a><span></span></h1>
+    <h1 class="heading"><span>Grade</span> 1 and 2</h1>
+    <section id="learning">
+        {% if learnings_exist %}
+        <h1>Learning Materials</h1>
+      <div class="box-container" >
+            {% for learning in learnings %}
+            {% if learning.grade_level == 1 or learning.grade_level == 2 %}
+            {% if learning.subject == "Filipino" %}
+            <div class="box">
+                <h3><a style="text-decoration: none; color:black;" href="{% url 'download_learning' learning.id %}" target="_blank">{{ learning.name }}</a></h3>
+                <div class="btn-group"> 
+                    <form method="post" action="{% url 'view_learning' learning.id %}">
+                    {% csrf_token %}
+                    <button class="btn" type="submit">View</button>
+                    
+                    </form>
+                    <form method="post" action="{% url 'download_learning' learning.id %}">
+                        {% csrf_token %}
+                        <button class="btn" type="submit">Download</button>
+                    </form>
+                </div>
+            </div>
+            {% endif %}
+            {% endif %}
+            {% endfor %}
+        
+        </div>
+        {% endif %}
+
+    </section>
+    <section id="quiz">
+        {% if quizzes_exist %}
+    <h1>Videos</h1>
+    <div class="box-container">
+        {% for quiz in quizzes %}
+        {% if quiz.grade_level == 1 or quiz.grade_level == 2 %}
+        {% if quiz.subject == "Filipino" %}
+                <div class="box" >
+                    <h3><a style="text-decoration: none; color:black;" href="{% url 'download_quiz' quiz.id %}" target="_blank">{{ quiz.name }}</a></h3>
+                    <div class="btn-group"> 
+            
+                        <a href="{{ quiz.link }}"><button class="btn" type="submit">View</button></a>
+    
+                        <form method="post" action="{% url 'download_quiz' quiz.id %}">
+                            {% csrf_token %}
+                            <button class="btn" type="submit">Download</button>
+                        </form>
+                    </div>
+                </div>
+        {% endif %}
+        {% endif %}
+        {% endfor %}
+    </div>
+    {% endif %}
+    </section>
+
+
+</section>
+
+{% endblock %}
+
+
+   

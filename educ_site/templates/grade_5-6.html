@@ -7,14 +7,8 @@
 
 {% block nav %}
 <a href="{% url 'home' %}">home</a>
-<a href="#contact">Videos</a>
-<a href="#contact">Learning Modules</a>
-{% endblock %}
-{% block search %}
-<form action="{% url 'search'%}"  method="get">
-    <input class="search-input" type="text" name="q" placeholder="Search...">
-    <button class="search-btn" type="submit">Search</button>
-</form>
+<a href="#quiz">Videos</a>
+<a href="#learning">Learning Modules</a>
 {% endblock %}
 
 {% block level %}
@@ -22,19 +16,27 @@
     <div class="fas fa-bars" id="menu-btn"></div>
 {% endblock %}
 
-<section class="activities">
+{% block search %}
+<form action="{% url 'search'%}"  method="get">
+    <input class="search-input" type="text" name="q" placeholder="Search...">
+    <button class="search-btn" type="submit">Search</button>
+</form>
+{% endblock %}
 
+
+<section class="activities">
+<h1><a href="{% url 'filipinoG5' %}" style="padding: 15px;position: absolute;top: 10%;left:1%;color: rgb(10, 10, 10);">English </a><span></span></h1>
     <h1 class="heading"><span>Grade</span> 5 and 6</h1>
-    
     <section id="learning">
         {% if learnings_exist %}
-    <h1>Learning Modules</h1>
-    <div class="box-container" >
+        <h1>Learning Materials</h1>
+      <div class="box-container" >
             {% for learning in learnings %}
             {% if learning.grade_level == 5 or learning.grade_level == 6 %}
-            <div class="box" >
+            {% if learning.subject == "English" %}
+            <div class="box">
                 <h3><a style="text-decoration: none; color:black;" href="{% url 'download_learning' learning.id %}" target="_blank">{{ learning.name }}</a></h3>
-                <div style="display: flex; gap: 5px; justify-content: center; align-items: center;"> 
+                <div class="btn-group"> 
                     <form method="post" action="{% url 'view_learning' learning.id %}">
                     {% csrf_token %}
                     <button class="btn" type="submit">View</button>
@@ -47,26 +49,27 @@
                 </div>
             </div>
             {% endif %}
+            {% endif %}
             {% endfor %}
         
-    </div>
-    {% endif %}
-    </section>
+        </div>
+        {% endif %}
 
+    </section>
+    
     <section id="quiz">
         {% if quizzes_exist %}
     <h1>Videos</h1>
     <div class="box-container">
         {% for quiz in quizzes %}
         {% if quiz.grade_level == 5 or quiz.grade_level == 6 %}
+        {% if quiz.subject == "English" %}
                 <div class="box" >
                     <h3><a style="text-decoration: none; color:black;" href="{% url 'download_quiz' quiz.id %}" target="_blank">{{ quiz.name }}</a></h3>
-                    <div style="display: flex; gap: 5px; justify-content: center; align-items: center;"> 
-                        <form method="post" action="{% url 'view_quiz' quiz.id %}">
-                        {% csrf_token %}
-                        <button class="btn" type="submit">View</button>
-                        
-                        </form>
+                    <div class="btn-group"> 
+            
+                        <a href="{{ quiz.link }}"><button class="btn" type="submit">View</button></a>
+    
                         <form method="post" action="{% url 'download_quiz' quiz.id %}">
                             {% csrf_token %}
                             <button class="btn" type="submit">Download</button>
@@ -74,31 +77,6 @@
                     </div>
                 </div>
         {% endif %}
-        {% endfor %}
-    </div>
-    {% endif %}
-    </section>
-
-    <section id="activity">
-        {% if activities_exist %}
-    <h1>Activities</h1>
-    <div class="box-container">
-        {% for activity in activities %}
-        {% if activity.grade_level == 5 or activity.grade_level == 6 %}
-                <div class="box" >
-                    <h3><a style="text-decoration: none; color:black;" href="{% url 'download_activity' activity.id %}" target="_blank">{{ activity.name }}</a></h3>
-                    <div style="display: flex; gap: 5px; justify-content: center; align-items: center;"> 
-                        <form method="post" action="{% url 'view_activity' activity.id %}">
-                        {% csrf_token %}
-                        <button class="btn" type="submit">View</button>
-                        
-                        </form>
-                        <form method="post" action="{% url 'download_activity' activity.id %}">
-                            {% csrf_token %}
-                            <button class="btn" type="submit">Download</button>
-                        </form>
-                    </div>
-                </div>
         {% endif %}
         {% endfor %}
     </div>
@@ -108,3 +86,6 @@
 </section>
 
 {% endblock %}
+
+
+   

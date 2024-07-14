@@ -12,6 +12,21 @@ from django.shortcuts import render
 def home(request):
     return render(request, 'home.html')
 
+def filipinoPageG1AndG2(request):
+    activity = Activity.objects.all()
+    quiz = Videos.objects.all()
+    learning = Learning.objects.all()
+
+    context = {
+        'activities': activity,
+        'quizzes': quiz,
+        'learnings':learning,
+        'activities_exist': activity.exists(),
+        'quizzes_exist': quiz.exists(),
+        'learnings_exist': learning.exists(),
+    }
+    return render(request,'Filipino_g1-2.html',context)
+
 def activity_grade_1(request):
     activity = Activity.objects.all()
     quiz = Videos.objects.all()
@@ -28,10 +43,25 @@ def activity_grade_1(request):
 
     return render(request,'grade_1-2.html',context)
 
+def filipinoPageG3AndG4(request):
+    activity = Activity.objects.all()
+    quiz = Videos.objects.all()
+    learning = Learning.objects.all()
+
+    context = {
+        'activities': activity,
+        'quizzes': quiz,
+        'learnings':learning,
+        'activities_exist': activity.exists(),
+        'quizzes_exist': quiz.exists(),
+        'learnings_exist': learning.exists(),
+    }
+    return render(request,'Filipino_g3-4.html',context)
+
 def activity_grade_3(request):
-    activity = Activity.objects.filter(grade_level__in=[3, 4])
-    quiz = Videos.objects.filter(grade_level__in=[3, 4])
-    learning = Learning.objects.filter(grade_level__in=[3, 4])
+    activity = Activity.objects.all()
+    quiz = Videos.objects.all()
+    learning = Learning.objects.all()
 
     context = {
         'activities': activity,
@@ -44,11 +74,25 @@ def activity_grade_3(request):
 
     return render(request,'grade_3-4.html',context)
 
-def activity_grade_5(request):
-    activity = Activity.objects.filter(grade_level__in=[5, 6])
-    quiz = Videos.objects.filter(grade_level__in=[5, 6])
-    learning = Learning.objects.filter(grade_level__in=[5, 6])
+def filipinoPageG5AndG6(request):
+    activity = Activity.objects.all()
+    quiz = Videos.objects.all()
+    learning = Learning.objects.all()
 
+    context = {
+        'activities': activity,
+        'quizzes': quiz,
+        'learnings':learning,
+        'activities_exist': activity.exists(),
+        'quizzes_exist': quiz.exists(),
+        'learnings_exist': learning.exists(),
+    }
+    return render(request,'Filipino_g5-6.html',context)
+
+def activity_grade_5(request):
+    activity = Activity.objects.all()
+    quiz = Videos.objects.all()
+    learning = Learning.objects.all()
     context = {
         'activities': activity,
         'quizzes': quiz,

@@ -16,6 +16,9 @@ urlpatterns = [
     path('learning/download/<int:learning_id>/', views.download_learning, name='download_learning'),
     path('search/', views.search, name='search'),
     path('read-more/', views.readMore, name='readMore'),
+    path('Filipino-grade-1-2/', views.filipinoPageG1AndG2, name='filipinoG1'),
+    path('Filipino-grade-3-4/', views.filipinoPageG3AndG4, name='filipinoG3'),
+    path('Filipino-grade-5-6/', views.filipinoPageG5AndG6, name='filipinoG5'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
