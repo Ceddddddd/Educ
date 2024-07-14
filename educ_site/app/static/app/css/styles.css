@@ -595,8 +595,6 @@ margin-bottom: 30px;
     transition: .4s linear;
     
   }
-
-
   .header .navbar a{
     font-size: 2rem;
     margin: 2rem 2.5rem;
@@ -636,16 +634,31 @@ margin-bottom: 30px;
     margin: 0;
     font-size: small;
   }
+
 }
 
 @media (max-width: 450px){
+
   html{
     font-size: 50%;
   }
   .home .content h3{
     font-size: 3.5rem;
   }
-
+  .search-input{
+    width: 120px;
+    height: 10px;
+    margin: 0;
+    font-size: small;
+  }
+}
+@media (max-width: 375px){
+  .search-input{
+    width: 100px;
+    height: 10px;
+    margin: 0;
+    font-size: small;
+  }
 }
 
 @keyframes circular-motion {

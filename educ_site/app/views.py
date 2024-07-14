@@ -117,24 +117,27 @@ def download_education(request):
         '5-6': range(5, 7),
     }
 
-    # Copy files for each model and grade level to the appropriate subfolder
+    # Define the subjects
+    subjects = ['English', 'Filipino']
+
+    # Copy files for each grade level and subject to the appropriate subfolder
     for grade_folder, grades in grade_levels.items():
         grade_dir = os.path.join(temp_dir, f'Grade_{grade_folder}')
         os.makedirs(grade_dir, exist_ok=True)
-        for model_class in [Learning, Videos, Activity]:
-            model_folder_name = model_class.__name__
-            model_dir = os.path.join(grade_dir, model_folder_name)
-            os.makedirs(model_dir, exist_ok=True)
-            objects = model_class.objects.filter(grade_level__in=grades)
+        for subject in subjects:
+            subject_dir = os.path.join(grade_dir, subject)
+            os.makedirs(subject_dir, exist_ok=True)
+            objects = Learning.objects.filter(grade_level__in=grades, subject=subject)
             for obj in objects:
-                try:
-                    file_name = str(obj.content).split('/')[-1]  # Extract the file name from the URL
-                    file_path = os.path.join(model_dir, file_name)
-                    with open(file_path, 'wb') as file:
-                        file.write(obj.content.read())  # Write the file content to the temporary directory
-                    print(f"Saved file {file_name} to {model_folder_name} in Grade {grade_folder}")
-                except Exception as e:
-                    print(f"Error processing file for {model_folder_name} in Grade {grade_folder}: {e}")
+                if obj.subject in subjects:  # Ensure the subject is valid
+                    try:
+                        file_name = str(obj.content).split('/')[-1]  # Extract the file name from the URL
+                        file_path = os.path.join(subject_dir, file_name)
+                        with open(file_path, 'wb') as file:
+                            file.write(obj.content.read())  # Write the file content to the temporary directory
+                        print(f"Saved file {file_name} to Learning in Grade {grade_folder} under {subject}")
+                    except Exception as e:
+                        print(f"Error processing file for Learning in Grade {grade_folder} under {subject}: {e}")
 
     # Create a zip file from the temporary directory
     zip_file_path = os.path.join(settings.MEDIA_ROOT, 'Education_Folder.zip')
@@ -152,7 +155,6 @@ def download_education(request):
     # Clean up the temporary directory and zip file
     shutil.rmtree(temp_dir)
     os.remove(zip_file_path)
-
     return response
 
 def view_activity(request, activity_id):

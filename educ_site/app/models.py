@@ -1,7 +1,5 @@
 from django.db import models
 
-
-
 class Learning(models.Model):
     name = models.CharField(max_length=255)
     content = models.FileField()
