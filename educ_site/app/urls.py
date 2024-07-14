@@ -15,6 +15,7 @@ urlpatterns = [
     path('learning/view/<int:learning_id>/', views.view_learning, name='view_learning'),
     path('learning/download/<int:learning_id>/', views.download_learning, name='download_learning'),
     path('search/', views.search, name='search'),
+    path('read-more/', views.readMore, name='readMore'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

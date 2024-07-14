@@ -6,7 +6,7 @@ from zipfile import ZipFile
 from io import BytesIO
 from django.http import HttpResponse, FileResponse, Http404
 from django.conf import settings
-from .models import Learning, Quiz, Activity
+from .models import Learning, Videos, Activity
 from django.shortcuts import render
 
 def home(request):
@@ -14,7 +14,7 @@ def home(request):
 
 def activity_grade_1(request):
     activity = Activity.objects.all()
-    quiz = Quiz.objects.all()
+    quiz = Videos.objects.all()
     learning = Learning.objects.all()
 
     context = {
@@ -30,7 +30,7 @@ def activity_grade_1(request):
 
 def activity_grade_3(request):
     activity = Activity.objects.filter(grade_level__in=[3, 4])
-    quiz = Quiz.objects.filter(grade_level__in=[3, 4])
+    quiz = Videos.objects.filter(grade_level__in=[3, 4])
     learning = Learning.objects.filter(grade_level__in=[3, 4])
 
     context = {
@@ -46,7 +46,7 @@ def activity_grade_3(request):
 
 def activity_grade_5(request):
     activity = Activity.objects.filter(grade_level__in=[5, 6])
-    quiz = Quiz.objects.filter(grade_level__in=[5, 6])
+    quiz = Videos.objects.filter(grade_level__in=[5, 6])
     learning = Learning.objects.filter(grade_level__in=[5, 6])
 
     context = {
@@ -77,7 +77,7 @@ def download_education(request):
     for grade_folder, grades in grade_levels.items():
         grade_dir = os.path.join(temp_dir, f'Grade_{grade_folder}')
         os.makedirs(grade_dir, exist_ok=True)
-        for model_class in [Learning, Quiz, Activity]:
+        for model_class in [Learning, Videos, Activity]:
             model_folder_name = model_class.__name__
             model_dir = os.path.join(grade_dir, model_folder_name)
             os.makedirs(model_dir, exist_ok=True)
@@ -140,7 +140,7 @@ def download_activity(request, activity_id):
 
 def view_quiz(request, quiz_id):
     try:
-        quiz = Quiz.objects.get(id=quiz_id)
+        quiz = Videos.objects.get(id=quiz_id)
         file_path = quiz.content.path
         file_name = quiz.content.name.split('/')[-1]
         response = FileResponse(open(file_path, 'rb'), content_type='video/mp4')
@@ -154,7 +154,7 @@ def view_quiz(request, quiz_id):
 
 def download_quiz(request, quiz_id):
     try:
-        quiz = Quiz.objects.get(id=quiz_id)
+        quiz = Videos.objects.get(id=quiz_id)
         file_path = quiz.content.path
         file_name = quiz.content.name.split('/')[-1]
         response = FileResponse(open(file_path, 'rb'), content_type='video/mp4')
@@ -195,7 +195,7 @@ def download_learning(request, learning_id):
 def search(request):
     query = request.GET.get('q', '')
     activities = Activity.objects.filter(name__icontains=query)
-    quizzes = Quiz.objects.filter(name__icontains=query)
+    quizzes = Videos.objects.filter(name__icontains=query)
     learnings = Learning.objects.filter(name__icontains=query)
     
     context = {
@@ -209,3 +209,6 @@ def search(request):
     }
 
     return render(request, 'grade_1-2.html', context)
+
+def readMore(request):
+    return render(request, 'readMore.html')
