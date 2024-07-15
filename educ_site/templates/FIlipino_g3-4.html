@@ -35,7 +35,7 @@
             {% if learning.grade_level == 3 or learning.grade_level == 4 %}
             {% if learning.subject == "Filipino" %}
             <div class="box">
-                <h3><a style="text-decoration: none; color:black;" href="{% url 'download_learning' learning.id %}" target="_blank">{{ learning.name }}</a></h3>
+                <p><a style="text-decoration: none; color:black;" href="{% url 'download_learning' learning.id %}" target="_blank">Title: {{ learning.name }}</a></p>
                 <div class="btn-group"> 
                     <form method="post" action="{% url 'view_learning' learning.id %}">
                     {% csrf_token %}
@@ -64,7 +64,7 @@
         {% if quiz.grade_level == 3 or quiz.grade_level == 4 %}
         {% if quiz.subject == "Filipino" %}
                 <div class="box" >
-                    <h3><a style="text-decoration: none; color:black;" href="{% url 'download_quiz' quiz.id %}" target="_blank">{{ quiz.name }}</a></h3>
+                    <a><a style="text-decoration: none; color:black;" href="{% url 'download_quiz' quiz.id %}" target="_blank">Title: {{ quiz.name }}</a></a>
                     <div class="btn-group"> 
             
                         <a href="{{ quiz.link }}"><button class="btn" type="submit">View</button></a>

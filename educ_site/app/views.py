@@ -150,7 +150,7 @@ def download_education(request):
     # Serve the zip file for download
     with open(zip_file_path, 'rb') as zip_file:
         response = HttpResponse(zip_file.read(), content_type='application/zip')
-        response['Content-Disposition'] = 'attachment; filename="Education_Folder.zip"'
+        response['Content-Disposition'] = 'attachment; filename="Education_Files.zip"'
 
     # Clean up the temporary directory and zip file
     shutil.rmtree(temp_dir)

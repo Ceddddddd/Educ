@@ -18,6 +18,9 @@
   text-transform: capitalize;
   transition: all .2s linear;
 }
+p{
+  font-size: 15px;
+}
 
 html{
   font-size: 62.5%;
@@ -55,6 +58,7 @@ section{
   color: var(--orange);
   background: none;
   cursor: pointer;
+  flex-wrap: nowrap;
 }
 
 .btn:hover{
@@ -488,7 +492,7 @@ margin-bottom: 30px;
 .footer .box-container{
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(25rem,1fr));
-  gap: 50rem;
+  gap: 10rem;
 }
 
 .footer .box-container .box h3{
