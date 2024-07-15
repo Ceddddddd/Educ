@@ -3,7 +3,7 @@ import shutil
 import tempfile
 import zipfile 
 from zipfile import ZipFile
-from io import BytesIO
+import io
 from django.http import HttpResponse, FileResponse, Http404
 from django.conf import settings
 from .models import Learning, Videos, Activity
@@ -106,9 +106,8 @@ def activity_grade_5(request):
     
 
 def download_education(request):
-    # Create a temporary directory to hold the files
-    temp_dir = os.path.join(settings.MEDIA_ROOT, 'Education_Folder')
-    os.makedirs(temp_dir, exist_ok=True)
+      # Create an in-memory bytes buffer
+    in_memory_zip = io.BytesIO()
 
     # Define grade levels and their folder names
     grade_levels = {
@@ -120,41 +119,27 @@ def download_education(request):
     # Define the subjects
     subjects = ['English', 'Filipino']
 
-    # Copy files for each grade level and subject to the appropriate subfolder
-    for grade_folder, grades in grade_levels.items():
-        grade_dir = os.path.join(temp_dir, f'Grade_{grade_folder}')
-        os.makedirs(grade_dir, exist_ok=True)
-        for subject in subjects:
-            subject_dir = os.path.join(grade_dir, subject)
-            os.makedirs(subject_dir, exist_ok=True)
-            objects = Learning.objects.filter(grade_level__in=grades, subject=subject)
-            for obj in objects:
-                if obj.subject in subjects:  # Ensure the subject is valid
-                    try:
-                        file_name = str(obj.content).split('/')[-1]  # Extract the file name from the URL
-                        file_path = os.path.join(subject_dir, file_name)
-                        with open(file_path, 'wb') as file:
-                            file.write(obj.content.read())  # Write the file content to the temporary directory
-                        print(f"Saved file {file_name} to Learning in Grade {grade_folder} under {subject}")
-                    except Exception as e:
-                        print(f"Error processing file for Learning in Grade {grade_folder} under {subject}: {e}")
+    with ZipFile(in_memory_zip, 'w') as zip_file:
+        # Copy files for each grade level and subject to the appropriate subfolder in the zip
+        for grade_folder, grades in grade_levels.items():
+            for subject in subjects:
+                objects = Learning.objects.filter(grade_level__in=grades, subject=subject)
+                for obj in objects:
+                    if obj.subject in subjects:  # Ensure the subject is valid
+                        try:
+                            file_name = str(obj.content).split('/')[-1]  # Extract the file name from the URL
+                            file_content = obj.content.read()  # Read the file content
+                            # Create a file path within the zip
+                            file_path = f'Grade_{grade_folder}/{subject}/{file_name}'
+                            zip_file.writestr(file_path, file_content)
+                            print(f"Added file {file_name} to zip in Grade {grade_folder} under {subject}")
+                        except Exception as e:
+                            print(f"Error processing file for Learning in Grade {grade_folder} under {subject}: {e}")
 
-    # Create a zip file from the temporary directory
-    zip_file_path = os.path.join(settings.MEDIA_ROOT, 'Education_Folder.zip')
-    with ZipFile(zip_file_path, 'w') as zip_file:
-        for root, dirs, files in os.walk(temp_dir):
-            for file in files:
-                file_path = os.path.join(root, file)
-                zip_file.write(file_path, os.path.relpath(file_path, temp_dir))
-
-    # Serve the zip file for download
-    with open(zip_file_path, 'rb') as zip_file:
-        response = HttpResponse(zip_file.read(), content_type='application/zip')
-        response['Content-Disposition'] = 'attachment; filename="Education_Files.zip"'
-
-    # Clean up the temporary directory and zip file
-    shutil.rmtree(temp_dir)
-    os.remove(zip_file_path)
+    # Prepare the response
+    in_memory_zip.seek(0)
+    response = HttpResponse(in_memory_zip.read(), content_type='application/zip')
+    response['Content-Disposition'] = 'attachment; filename="Education_Files.zip"'
     return response
 
 def view_activity(request, activity_id):
